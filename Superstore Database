@@ -40,5 +40,10 @@ FROM superstore
 WHERE category="Kitchen Supplies";
 
 
+#Which item had the highest average rating
+Select MAX(average_rating), item_name
+from superstore
+group by item_name
+order by MAX(average_rating) DESC;
 
 
