@@ -1,3 +1,5 @@
+#This analysis utilized the following Fortune 500 dataset:
+
 CREATE TABLE fortune_companies (
     company_id INTEGER PRIMARY KEY,
     company_name TEXT,
@@ -55,3 +57,39 @@ VALUES
     ('Company II', 'Telecommunications', 110.5, 2000, 1, 21, 12, 4.9),
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
+
+# Analysis: 
+
+1.) Assign all companies as "Interested" or "Not Interested" based on their healthcare benefits offered.
+
+select company_name, 
+CASE when healthcare_benefits = 1 THEN "Interested"
+when healthcare_benefits = 0 THEN "Not Interested"
+END AS "Job Application"
+from fortune_companies;
+
+2.) Which companies in which industries have more than 20 days of paid time off and have healthcare benefits?
+
+select company_name, paid_time_off_days AS PTO
+from fortune_companies
+where paid_time_off_days >= 20
+AND healthcare_benefits =1 
+order by paid_time_off_days DESC;
+
+3.) Which company has the most revenue in the Technology industry, and what's their revenue?
+
+select Max (revenue), company_name
+from fortune_companies
+where industry = "Technology";
+
+4.) Which industries have an average revenue of at least $200 Billion, and what are their avg revenues from least to greatest?
+
+select industry, ROUND (AVG (revenue),1) AS avg_revenue_billions,
+from fortune_companies
+group by industry
+having avg_revenue_billions >= 200
+order by avg_revenue_billions ASC;
+
+
+
+
